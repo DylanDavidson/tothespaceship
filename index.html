@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!-- Dylan Davidson -->
+<!-- Final Project - CAP 4720 -->
+<!-- To The Spaceship! -->
+<html>
+  <head>
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <!-- Libraries -->
+    <script type="text/javascript" src="libs/three.min.js"></script>
+    <script type="text/javascript" src="libs/helvetiker.js"></script>
+    <script type="text/javascript" src="libs/physi.js"></script>
+    <script type="text/javascript" src="libs/stl.js"></script>
+    <script type="text/javascript">
+      Physijs.scripts.worker = "libs/physijs_worker.js";
+      Physijs.scripts.ammo = "ammo.js";
+    </script>
+
+    <!-- Local Scripts -->
+    <script type="text/javascript" src="build/base.js"></script>
+    <script type="text/javascript" src="build/game.js"></script>
+
+    <script type="text/javascript">
+      this.timeout = function(time, method) {
+        setTimeout(method, time);
+      }
+
+      this.game = null;
+
+      this.onload = function() {
+        this.game = new Game();
+        this.render();
+      }
+
+      this.render = function() {
+        this.game.render();
+        requestAnimationFrame(this.render);
+      }
+    </script>
+
+    <link rel="stylesheet" type="text/css" href="src/main.css">
+
+  </head>
+  <body>
+    <div class="name">
+      Created by
+      <a href="http://nylad.me">Dylan Davidson</a>
+    </div>
+  </body>
+</html>
