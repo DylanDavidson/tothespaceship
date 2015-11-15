@@ -3,9 +3,15 @@
   this.Game = (function() {
     function Game() {
       this.base = new Base();
+      this.controller = new Controller(this);
+      this.floor = new Cube(this, 100, 500, 10);
+      this.floor.setPosition(0, 100, 0);
+      this.player = new Player(this);
+      this.base.follow(this.player.getObject());
     }
 
     Game.prototype.render = function() {
+      this.player.update();
       return this.base.render();
     };
 
@@ -15,6 +21,10 @@
 
     Game.prototype.removeFromScene = function(object) {
       return this.base.removeFromScene(object);
+    };
+
+    Game.prototype.spacePressed = function() {
+      return this.player.jump();
     };
 
     return Game;

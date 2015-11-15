@@ -26,13 +26,13 @@
 
   ENABLE_SHADOW_MAPS = true;
 
-  GRAVITY = new THREE.Vector3(0, 0, -15);
+  GRAVITY = new THREE.Vector3(0, 0, -50);
 
-  CAMERA_POSITON = new THREE.Vector3(0, -100, 50);
+  CAMERA_POSITON = new THREE.Vector3(0, -200, 50);
 
   LOOK_AT_POSITION = new THREE.Vector3(0, 0, 0);
 
-  LIGHT_POSITION = new THREE.Vector3(-20, -150, 80);
+  LIGHT_POSITION = new THREE.Vector3(-30, -200, 50);
 
   this.Base = (function() {
     function Base() {
@@ -49,6 +49,10 @@
     }
 
     Base.prototype.render = function() {
+      if (this.player) {
+        this.setCameraPosition(CAMERA_POSITON.x, this.player.position.y - 50, CAMERA_POSITON.z);
+        this.camera.lookAt(this.player.position);
+      }
       this.scene.simulate();
       return this.renderer.render(this.scene, this.camera);
     };
@@ -88,6 +92,10 @@
       this.spotlight.shadowDarkness = 0.5;
       this.spotlight.castShadow = true;
       return this.addToScene(this.spotlight);
+    };
+
+    Base.prototype.follow = function(object) {
+      return this.player = object;
     };
 
     return Base;

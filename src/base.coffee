@@ -20,12 +20,12 @@ FAR_FRUSTRUM = 1000
 ENABLE_SHADOW_MAPS = true
 
 # Physics
-GRAVITY = new THREE.Vector3(0, 0, -15)
+GRAVITY = new THREE.Vector3(0, 0, -50)
 
 # Positions
-CAMERA_POSITON = new THREE.Vector3(0, -100, 50)
+CAMERA_POSITON = new THREE.Vector3(0, -200, 50)
 LOOK_AT_POSITION = new THREE.Vector3(0, 0, 0)
-LIGHT_POSITION = new THREE.Vector3(-20, -150, 80)
+LIGHT_POSITION = new THREE.Vector3(-30, -200, 50)
 
 class @Base
   constructor: ->
@@ -45,6 +45,9 @@ class @Base
 
   # Called every frame, updates the scene and simulates the physics
   render: ->
+    if @player
+      @setCameraPosition(CAMERA_POSITON.x, @player.position.y - 50, CAMERA_POSITON.z)
+      @camera.lookAt(@player.position)
     @scene.simulate()
     @renderer.render(@scene, @camera)
 
@@ -80,3 +83,6 @@ class @Base
     @spotlight.shadowDarkness = 0.5
     @spotlight.castShadow = true
     @addToScene(@spotlight)
+
+  follow: (object) ->
+    @player = object
