@@ -5,14 +5,17 @@
   this.Player = (function() {
     Player.prototype.BASE_Z = 12.5;
 
+    Player.prototype.START = new THREE.Vector3(0, -150, 12.5);
+
     Player.prototype.onGround = true;
 
     function Player(game) {
       this.update = bind(this.update, this);
       this.cube = new Cube(game, 10, 10, 15);
       this.cube.setColor(0xbdc3c7);
-      this.cube.setPosition(0, -150, this.BASE_Z);
+      this.cube.setPosition(this.START.x, this.START.y, this.START.z);
       this.cube.setMass(1);
+      this.cube.setName('Player');
     }
 
     Player.prototype.update = function() {
@@ -29,8 +32,16 @@
       return this.cube.object.applyCentralImpulse(new THREE.Vector3(0, 0, 30));
     };
 
+    Player.prototype.reset = function() {
+      return this.cube.setPosition(this.START.x, this.START.y, this.START.z);
+    };
+
     Player.prototype.getObject = function() {
       return this.cube.object;
+    };
+
+    Player.prototype.getPosition = function() {
+      return this.cube.object.position;
     };
 
     return Player;

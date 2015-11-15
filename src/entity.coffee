@@ -8,3 +8,6 @@ class @Entity
 
   setMass: (mass) ->
     @object.mass = mass
+
+  setName: (name) ->
+    @object.name = name

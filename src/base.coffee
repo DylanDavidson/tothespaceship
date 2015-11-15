@@ -23,7 +23,7 @@ ENABLE_SHADOW_MAPS = true
 GRAVITY = new THREE.Vector3(0, 0, -50)
 
 # Positions
-CAMERA_POSITON = new THREE.Vector3(0, -200, 50)
+CAMERA_POSITON = new THREE.Vector3(20, -200, 40)
 LOOK_AT_POSITION = new THREE.Vector3(0, 0, 0)
 LIGHT_POSITION = new THREE.Vector3(-30, -200, 50)
 
@@ -46,8 +46,8 @@ class @Base
   # Called every frame, updates the scene and simulates the physics
   render: ->
     if @player
-      @setCameraPosition(CAMERA_POSITON.x, @player.position.y - 50, CAMERA_POSITON.z)
-      @camera.lookAt(@player.position)
+      @setCameraPosition(CAMERA_POSITON.x, @player.getPosition().y - 50, CAMERA_POSITON.z)
+      @camera.lookAt(@player.getPosition())
     @scene.simulate()
     @renderer.render(@scene, @camera)
 
@@ -60,6 +60,9 @@ class @Base
 
   setCameraPosition: (x, y, z) ->
     @camera.position.set(x, y, z)
+
+  setLightPosition: (x, y, z) ->
+    @spotlight.position.set(x, y, z)
 
   setupRenderer: ->
     @renderer.setClearColor(BLACK, OPAQUE_ALPHA)
@@ -81,6 +84,7 @@ class @Base
     @spotlight.shadowCameraNear = 20
     @spotlight.shadowCameraFar = 500
     @spotlight.shadowDarkness = 0.5
+    # @spotlight.shadowCameraVisible = true
     @spotlight.castShadow = true
     @addToScene(@spotlight)
 

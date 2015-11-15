@@ -7,12 +7,18 @@
       this.floor = new Cube(this, 100, 500, 10);
       this.floor.setPosition(0, 100, 0);
       this.player = new Player(this);
-      this.base.follow(this.player.getObject());
+      this.base.follow(this.player);
+      this.obstacle = new Obstacle(this, 0);
+      this.obstacle = new Obstacle(this, 75);
     }
 
     Game.prototype.render = function() {
       this.player.update();
       return this.base.render();
+    };
+
+    Game.prototype.reset = function() {
+      return this.player.reset();
     };
 
     Game.prototype.addToScene = function(object) {

@@ -16,6 +16,10 @@
       return this.object.mass = mass;
     };
 
+    Entity.prototype.setName = function(name) {
+      return this.object.name = name;
+    };
+
     return Entity;
 
   })();
