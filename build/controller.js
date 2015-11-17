@@ -13,7 +13,9 @@
       switch (event.keyCode) {
         case 32:
         case 38:
-          return this.game.spacePressed();
+          return this.game.jump();
+        case 40:
+          return this.game.slide();
       }
     };
 

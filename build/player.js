@@ -9,7 +9,15 @@
 
     Player.prototype.onGround = true;
 
+    Player.prototype.sliding = false;
+
+    Player.prototype.rotateDown = false;
+
+    Player.prototype.rotateUp = false;
+
     function Player(game) {
+      this.slideUp = bind(this.slideUp, this);
+      this.slideDown = bind(this.slideDown, this);
       this.update = bind(this.update, this);
       this.cube = new Cube(game, 10, 10, 15);
       this.cube.setColor(0xbdc3c7);
@@ -20,16 +28,51 @@
 
     Player.prototype.update = function() {
       var position;
+      if (this.rotateDown) {
+        this.slideDown();
+      } else if (this.rotateUp) {
+        this.slideUp();
+      }
       position = this.cube.object.position;
       this.onGround = position.z <= this.BASE_Z;
       return this.cube.setPosition(position.x, position.y + 1, position.z);
     };
 
     Player.prototype.jump = function() {
+      if (this.sliding) {
+        this.sliding = false;
+        this.rotateUp = true;
+        return;
+      }
       if (!this.onGround) {
         return;
       }
       return this.cube.object.applyCentralImpulse(new THREE.Vector3(0, 0, 30));
+    };
+
+    Player.prototype.startSlide = function() {
+      if (!(this.sliding || this.rotateDown || this.rotateUp)) {
+        return this.rotateDown = true;
+      }
+    };
+
+    Player.prototype.slideDown = function() {
+      if (this.cube.object.rotation.x >= (90 * DEGREES_TO_RADIANS)) {
+        this.rotateDown = false;
+        this.sliding = true;
+        return;
+      }
+      this.cube.object.__dirtyRotation = true;
+      return this.cube.object.rotation.x += 3 * DEGREES_TO_RADIANS;
+    };
+
+    Player.prototype.slideUp = function() {
+      if (this.cube.object.rotation.x <= (0 * DEGREES_TO_RADIANS)) {
+        this.rotateUp = false;
+        return;
+      }
+      this.cube.object.__dirtyRotation = true;
+      return this.cube.object.rotation.x -= 3 * DEGREES_TO_RADIANS;
     };
 
     Player.prototype.reset = function() {

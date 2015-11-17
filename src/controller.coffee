@@ -6,4 +6,6 @@ class @Controller
   onkeydown: (event) =>
     switch event.keyCode
       when 32, 38
-        @game.spacePressed()
+        @game.jump()
+      when 40
+        @game.slide()

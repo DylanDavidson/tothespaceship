@@ -1,5 +1,4 @@
 class @Obstacle extends @Entity
-  BASE_Z: 7.5
   COLOR: 0x95a5a6
 
   constructor: (game, y) ->

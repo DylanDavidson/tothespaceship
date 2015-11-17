@@ -7,8 +7,6 @@
   this.Obstacle = (function(superClass) {
     extend(Obstacle, superClass);
 
-    Obstacle.prototype.BASE_Z = 7.5;
-
     Obstacle.prototype.COLOR = 0x95a5a6;
 
     function Obstacle(game, y) {
