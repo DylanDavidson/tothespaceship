@@ -17,6 +17,21 @@
       game.addToScene(this.object);
     }
 
+    Cube.prototype.moveX = function(amount) {
+      this.object.__dirtyPosition = true;
+      return this.object.position.x += amount;
+    };
+
+    Cube.prototype.rotateX = function(degrees) {
+      this.object.__dirtyRotation = true;
+      return this.object.rotation.x += degrees * DEGREES_TO_RADIANS;
+    };
+
+    Cube.prototype.rotateZ = function(degrees) {
+      this.object.__dirtyRotation = true;
+      return this.object.rotation.z += degrees * DEGREES_TO_RADIANS;
+    };
+
     return Cube;
 
   })(Entity);

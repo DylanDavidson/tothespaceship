@@ -34,3 +34,9 @@ class @Game
 
   slide: ->
     @player.startSlide()
+
+  left: ->
+    @player.startLeft()
+
+  right: ->
+    @player.startRight()

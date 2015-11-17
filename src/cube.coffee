@@ -6,3 +6,15 @@ class @Cube extends Entity
     @object.receiveShadow = true
     @object.castShadow = true
     game.addToScene(@object)
+
+  moveX: (amount) ->
+    @object.__dirtyPosition = true
+    @object.position.x += amount
+
+  rotateX: (degrees) ->
+    @object.__dirtyRotation = true
+    @object.rotation.x += (degrees * DEGREES_TO_RADIANS)
+
+  rotateZ: (degrees) ->
+    @object.__dirtyRotation = true
+    @object.rotation.z += (degrees * DEGREES_TO_RADIANS)

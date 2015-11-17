@@ -16,6 +16,10 @@
           return this.game.jump();
         case 40:
           return this.game.slide();
+        case 37:
+          return this.game.left();
+        case 39:
+          return this.game.right();
       }
     };
 

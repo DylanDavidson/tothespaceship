@@ -5,6 +5,11 @@ class @Player
   sliding: false
   rotateDown: false
   rotateUp: false
+  movingLeft: false
+  movingRight: false
+  left: false
+  right: false
+  center: true
 
   constructor: (game) ->
     @cube = new Cube(game, 10, 10, 15)
@@ -18,6 +23,10 @@ class @Player
       @slideDown()
     else if @rotateUp
       @slideUp()
+    else if @movingLeft
+      @moveLeft()
+    else if @movingRight
+      @moveRight()
     position = @cube.object.position
     @onGround = position.z <= @BASE_Z
     @cube.setPosition(position.x, position.y + 1, position.z)
@@ -30,24 +39,69 @@ class @Player
     return unless @onGround
     @cube.object.applyCentralImpulse(new THREE.Vector3(0, 0, 30))
 
+  inAction: ->
+    @sliding || @rotateDown || @rotateUp || @movingLeft
+
   startSlide: ->
-    unless @sliding || @rotateDown || @rotateUp
+    unless @inAction()
       @rotateDown = true
+
+  startLeft: ->
+    unless @inAction() || @left
+      @movingLeft = true
+
+  startLeft: ->
+    unless @inAction() || @left
+      @movingLeft = true
+
+  startRight: ->
+    unless @inAction() || @right
+      @movingRight = true
+
+  moveRight: ->
+    if @center
+      if @cube.object.position.x >= 20.0
+        @movingRight = false
+        @right = true
+        @center = false
+        return
+    else if @left
+      if @cube.object.position.x >= 0.0
+        @movingRight = false
+        @center = true
+        @left = false
+        return
+    @cube.moveX(0.5)
+    @cube.rotateZ(-2.25)
+
+  moveLeft: ->
+    if @center
+      if @cube.object.position.x <= -20
+        @movingLeft = false
+        @left = true
+        @center = false
+        return
+    else if @right
+      if @cube.object.position.x <= 0
+        @movingLeft = false
+        @center = true
+        @right = false
+        return
+    @cube.moveX(-0.5)
+    @cube.rotateZ(2.25)
 
   slideDown: =>
     if @cube.object.rotation.x >= (90 * DEGREES_TO_RADIANS)
       @rotateDown = false
       @sliding = true
       return
-    @cube.object.__dirtyRotation = true
-    @cube.object.rotation.x += (3 * DEGREES_TO_RADIANS)
+    @cube.rotateX(3)
 
   slideUp: =>
     if @cube.object.rotation.x <= (0 * DEGREES_TO_RADIANS)
       @rotateUp = false
       return
-    @cube.object.__dirtyRotation = true
-    @cube.object.rotation.x -= (3 * DEGREES_TO_RADIANS)
+    @cube.rotateX(-3)
 
   reset: ->
     @cube.setPosition(@START.x, @START.y, @START.z)

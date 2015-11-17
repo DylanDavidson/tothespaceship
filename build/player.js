@@ -15,6 +15,16 @@
 
     Player.prototype.rotateUp = false;
 
+    Player.prototype.movingLeft = false;
+
+    Player.prototype.movingRight = false;
+
+    Player.prototype.left = false;
+
+    Player.prototype.right = false;
+
+    Player.prototype.center = true;
+
     function Player(game) {
       this.slideUp = bind(this.slideUp, this);
       this.slideDown = bind(this.slideDown, this);
@@ -32,6 +42,10 @@
         this.slideDown();
       } else if (this.rotateUp) {
         this.slideUp();
+      } else if (this.movingLeft) {
+        this.moveLeft();
+      } else if (this.movingRight) {
+        this.moveRight();
       }
       position = this.cube.object.position;
       this.onGround = position.z <= this.BASE_Z;
@@ -50,10 +64,72 @@
       return this.cube.object.applyCentralImpulse(new THREE.Vector3(0, 0, 30));
     };
 
+    Player.prototype.inAction = function() {
+      return this.sliding || this.rotateDown || this.rotateUp || this.movingLeft;
+    };
+
     Player.prototype.startSlide = function() {
-      if (!(this.sliding || this.rotateDown || this.rotateUp)) {
+      if (!this.inAction()) {
         return this.rotateDown = true;
       }
+    };
+
+    Player.prototype.startLeft = function() {
+      if (!(this.inAction() || this.left)) {
+        return this.movingLeft = true;
+      }
+    };
+
+    Player.prototype.startLeft = function() {
+      if (!(this.inAction() || this.left)) {
+        return this.movingLeft = true;
+      }
+    };
+
+    Player.prototype.startRight = function() {
+      if (!(this.inAction() || this.right)) {
+        return this.movingRight = true;
+      }
+    };
+
+    Player.prototype.moveRight = function() {
+      if (this.center) {
+        if (this.cube.object.position.x >= 20.0) {
+          this.movingRight = false;
+          this.right = true;
+          this.center = false;
+          return;
+        }
+      } else if (this.left) {
+        if (this.cube.object.position.x >= 0.0) {
+          this.movingRight = false;
+          this.center = true;
+          this.left = false;
+          return;
+        }
+      }
+      this.cube.moveX(0.5);
+      return this.cube.rotateZ(-2.25);
+    };
+
+    Player.prototype.moveLeft = function() {
+      if (this.center) {
+        if (this.cube.object.position.x <= -20) {
+          this.movingLeft = false;
+          this.left = true;
+          this.center = false;
+          return;
+        }
+      } else if (this.right) {
+        if (this.cube.object.position.x <= 0) {
+          this.movingLeft = false;
+          this.center = true;
+          this.right = false;
+          return;
+        }
+      }
+      this.cube.moveX(-0.5);
+      return this.cube.rotateZ(2.25);
     };
 
     Player.prototype.slideDown = function() {
@@ -62,8 +138,7 @@
         this.sliding = true;
         return;
       }
-      this.cube.object.__dirtyRotation = true;
-      return this.cube.object.rotation.x += 3 * DEGREES_TO_RADIANS;
+      return this.cube.rotateX(3);
     };
 
     Player.prototype.slideUp = function() {
@@ -71,8 +146,7 @@
         this.rotateUp = false;
         return;
       }
-      this.cube.object.__dirtyRotation = true;
-      return this.cube.object.rotation.x -= 3 * DEGREES_TO_RADIANS;
+      return this.cube.rotateX(-3);
     };
 
     Player.prototype.reset = function() {

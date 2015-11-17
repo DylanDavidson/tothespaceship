@@ -40,6 +40,14 @@
       return this.player.startSlide();
     };
 
+    Game.prototype.left = function() {
+      return this.player.startLeft();
+    };
+
+    Game.prototype.right = function() {
+      return this.player.startRight();
+    };
+
     return Game;
 
   })();
