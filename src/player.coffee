@@ -10,6 +10,7 @@ class @Player
   left: false
   right: false
   center: true
+  noJump: false
 
   constructor: (game) ->
     @cube = new Cube(game, 10, 10, 15)
@@ -17,6 +18,7 @@ class @Player
     @cube.setPosition(@START.x, @START.y, @START.z)
     @cube.setMass(1)
     @cube.setName('Player')
+    @cube.object.addEventListener('collision', @collision)
 
   update: =>
     if @rotateDown
@@ -28,19 +30,28 @@ class @Player
     else if @movingRight
       @moveRight()
     position = @cube.object.position
-    @onGround = position.z <= @BASE_Z
     @cube.setPosition(position.x, position.y + 1, position.z)
 
+  collision: (other) =>
+    if other.name == 'Floor'
+      @onGround = true
+
   jump: ->
+    return if !@onGround || @inAction()
     if @sliding
       @sliding = false
       @rotateUp = true
-      return
-    return unless @onGround
-    @cube.object.applyCentralImpulse(new THREE.Vector3(0, 0, 30))
+      @onGround = false
+    else
+      return if @noJump
+      @onGround = false
+      @noJump = true
+      @cube.object.applyCentralImpulse(new THREE.Vector3(0, 0, 30))
+      timeout 1000, =>
+        @noJump = false
 
   inAction: ->
-    @sliding || @rotateDown || @rotateUp || @movingLeft
+    @rotateDown || @rotateUp || @movingLeft || @movingRight
 
   startSlide: ->
     unless @inAction()
@@ -94,17 +105,28 @@ class @Player
     if @cube.object.rotation.x >= (90 * DEGREES_TO_RADIANS)
       @rotateDown = false
       @sliding = true
+      @onGround = true
       return
     @cube.rotateX(3)
 
   slideUp: =>
     if @cube.object.rotation.x <= (0 * DEGREES_TO_RADIANS)
       @rotateUp = false
+      @onGround = true
       return
     @cube.rotateX(-3)
 
   reset: ->
     @cube.setPosition(@START.x, @START.y, @START.z)
+    @cube.setRotation(0, 0, 0)
+    @center = true
+    @left = false
+    @right = false
+    @movingRight = false
+    @movingLeft = false
+    @sliding = false
+    @rotateUp = false
+    @rotateDown = false
 
   getObject: ->
     @cube.object

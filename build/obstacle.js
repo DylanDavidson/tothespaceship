@@ -9,12 +9,18 @@
 
     Obstacle.prototype.COLOR = 0x95a5a6;
 
-    function Obstacle(game, y) {
+    Obstacle.prototype.LANES = {
+      0: -20,
+      1: 0,
+      2: 20
+    };
+
+    function Obstacle(game, y, lane) {
       this.collision = bind(this.collision, this);
       this.game = game;
       this.cube = new Cube(this.game, 20, 5, 10);
       this.cube.setColor(this.COLOR);
-      this.cube.setPosition(0, y, this.BASE_Z);
+      this.cube.setPosition(this.LANES[lane], y, this.BASE_Z);
       this.cube.object.addEventListener('collision', this.collision);
     }
 

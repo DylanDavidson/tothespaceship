@@ -2,17 +2,29 @@
 (function() {
   window.DEGREES_TO_RADIANS = 0.0174533;
 
+  window.timeout = function(time, method) {
+    return setTimeout(method, time);
+  };
+
   this.Game = (function() {
     function Game() {
       this.base = new Base();
       this.controller = new Controller(this);
       this.floor = new Cube(this, 100, 500, 10);
       this.floor.setPosition(0, 100, 0);
+      this.floor.setName('Floor');
       this.player = new Player(this);
       this.base.follow(this.player);
-      this.obstacle = new Low(this, 0);
-      this.obstacle = new Low(this, 75);
-      this.obstacle = new High(this, 175);
+      this.obstacle = new Low(this, 0, 0);
+      this.obstacle = new Low(this, 0, 1);
+      this.obstacle = new Low(this, 0, 2);
+      this.obstacle = new High(this, 75, 0);
+      this.obstacle = new High(this, 75, 1);
+      this.obstacle = new High(this, 75, 2);
+      this.obstacle = new Low(this, 150, 1);
+      this.obstacle = new Low(this, 150, 2);
+      this.obstacle = new Low(this, 225, 0);
+      this.obstacle = new Low(this, 225, 1);
     }
 
     Game.prototype.render = function() {

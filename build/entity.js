@@ -4,8 +4,13 @@
     function Entity() {}
 
     Entity.prototype.setPosition = function(x, y, z) {
-      this.object.position.set(x, y, z);
-      return this.object.__dirtyPosition = true;
+      this.object.__dirtyPosition = true;
+      return this.object.position.set(x, y, z);
+    };
+
+    Entity.prototype.setRotation = function(x, y, z) {
+      this.object.__dirtyRotation = true;
+      return this.object.rotation.set(x, y, z);
     };
 
     Entity.prototype.setColor = function(color) {
