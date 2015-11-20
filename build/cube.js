@@ -7,6 +7,7 @@
     extend(Cube, superClass);
 
     function Cube(game, width, length, height) {
+      this.game = game;
       this.geometry = new THREE.BoxGeometry(width, length, height);
       this.material = new THREE.MeshPhongMaterial({
         color: 0x27ae60
@@ -14,7 +15,7 @@
       this.object = new Physijs.BoxMesh(this.geometry, this.material, 0);
       this.object.receiveShadow = true;
       this.object.castShadow = true;
-      game.addToScene(this.object);
+      this.game.addToScene(this.object);
     }
 
     Cube.prototype.moveX = function(amount) {
@@ -30,6 +31,10 @@
     Cube.prototype.rotateZ = function(degrees) {
       this.object.__dirtyRotation = true;
       return this.object.rotation.z += degrees * DEGREES_TO_RADIANS;
+    };
+
+    Cube.prototype.destroy = function() {
+      return this.game.removeFromScene(this.object);
     };
 
     return Cube;

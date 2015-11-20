@@ -1,11 +1,12 @@
 class @Cube extends Entity
   constructor: (game, width, length, height) ->
+    @game = game
     @geometry = new THREE.BoxGeometry(width, length, height)
     @material = new THREE.MeshPhongMaterial({ color: 0x27ae60 })
     @object = new Physijs.BoxMesh(@geometry, @material, 0)
     @object.receiveShadow = true
     @object.castShadow = true
-    game.addToScene(@object)
+    @game.addToScene(@object)
 
   moveX: (amount) ->
     @object.__dirtyPosition = true
@@ -18,3 +19,6 @@ class @Cube extends Entity
   rotateZ: (degrees) ->
     @object.__dirtyRotation = true
     @object.rotation.z += (degrees * DEGREES_TO_RADIANS)
+
+  destroy: ->
+    @game.removeFromScene(@object)

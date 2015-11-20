@@ -16,3 +16,6 @@ class @Obstacle extends @Entity
   collision: (other) =>
     if other.name == 'Player'
       @game.reset()
+
+  destroy: ->
+    @cube.destroy()

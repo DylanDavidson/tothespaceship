@@ -30,6 +30,10 @@
       }
     };
 
+    Obstacle.prototype.destroy = function() {
+      return this.cube.destroy();
+    };
+
     return Obstacle;
 
   })(this.Entity);
