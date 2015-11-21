@@ -1,7 +1,38 @@
 class @Controller
+  mouse: new THREE.Vector2()
+  raycaster: new THREE.Raycaster()
+  last: null
+  OLD_COLOR: 0x27ae60
+  started: false
+
   constructor: (game) ->
     @game = game
-    window.onkeydown = @onkeydown
+    window.addEventListener('mousemove', @mousemove)
+    window.addEventListener('mousedown', @mousedown)
+
+  update: ->
+    return if @started
+    if @last != null
+      @last.material.color.set(@OLD_COLOR)
+      @last = null
+    @raycaster.setFromCamera(@mouse, @game.base.camera)
+    intersects = @raycaster.intersectObjects(@game.base.scene.children)
+    return unless intersects.length
+    if intersects[0].object.name == 'Play'
+      @last = intersects[0].object
+      @last.material.color.set(0xf1c40f)
+
+  mousedown: =>
+    if @last
+      @started = true
+      @game.start()
+      window.onkeydown = @onkeydown
+      window.removeEventListener('mousemove', @mousemove)
+      window.removeEventListener('mousedown', @mousedown)
+
+  mousemove: (event) =>
+    @mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1
+    @mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1
 
   onkeydown: (event) =>
     switch event.keyCode

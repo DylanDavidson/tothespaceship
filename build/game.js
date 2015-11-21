@@ -9,16 +9,29 @@
   this.Game = (function() {
     function Game() {
       this.base = new Base();
-      this.level = new Level(this);
+      this.menu = new Menu(this);
       this.controller = new Controller(this);
-      this.player = new Player(this);
-      this.base.follow(this.player);
+      this.base.setCameraPosition(0, -300, 0);
+      this.base.setCameraLook(0, 0, 0);
+      this.base.setLightPosition(0, -300, 0);
+      this.base.setLightLook(0, 0, 0);
     }
 
+    Game.prototype.start = function() {
+      this.menu.hide();
+      this.base.setLightPosition(LIGHT_POSITION.x, LIGHT_POSITION.y, LIGHT_POSITION.z);
+      this.level = new Level(this);
+      this.player = new Player(this);
+      return this.base.follow(this.player);
+    };
+
     Game.prototype.render = function() {
-      this.player.update();
-      this.base.render();
-      return this.checkWin();
+      if (this.player) {
+        this.player.update();
+        this.checkWin();
+      }
+      this.controller.update();
+      return this.base.render();
     };
 
     Game.prototype.checkWin = function() {

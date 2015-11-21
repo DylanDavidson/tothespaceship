@@ -10,15 +10,26 @@ window.timeout = (time, method) ->
 class @Game
   constructor: ->
     @base = new Base()
-    @level = new Level(@)
+    @menu = new Menu(@)
     @controller = new Controller(@)
+    @base.setCameraPosition(0, -300, 0)
+    @base.setCameraLook(0, 0, 0)
+    @base.setLightPosition(0, -300, 0)
+    @base.setLightLook(0, 0, 0)
+
+  start: ->
+    @menu.hide()
+    @base.setLightPosition(LIGHT_POSITION.x, LIGHT_POSITION.y, LIGHT_POSITION.z)
+    @level = new Level(@)
     @player = new Player(@)
     @base.follow(@player)
 
   render: ->
-    @player.update()
+    if @player
+      @player.update()
+      @checkWin()
+    @controller.update()
     @base.render()
-    @checkWin()
 
   checkWin: ->
     if @player.getPosition().y >= @level.currentLength()
