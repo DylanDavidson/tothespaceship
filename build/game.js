@@ -21,7 +21,7 @@
 
     Game.prototype.start = function() {
       this.menu.hide();
-      this.base.spotlight.intensity = 0.2;
+      this.base.spotlight.intensity = 0.3;
       this.base.setLightPosition(LIGHT_POSITION.x, LIGHT_POSITION.y, LIGHT_POSITION.z);
       this.level = new Level(this);
       this.player = new Player(this);

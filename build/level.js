@@ -8,6 +8,15 @@
       this.index = 0;
       $.getJSON('src/levels.json', (function(_this) {
         return function(json) {
+          _this.landscape = new THREE.Mesh(Models.landscape.geometry, Models.landscape.materials);
+          _this.landscape.rotation.x += 90 * DEGREES_TO_RADIANS;
+          _this.landscape.scale.set(50, 50, 50);
+          _this.landscape.castShadow = true;
+          _this.landscape.receiveShadow = true;
+          _this.landscape.position.z += 5;
+          _this.landscape.position.x -= 300;
+          _this.landscape.position.y += 200;
+          _this.game.addToScene(_this.landscape);
           _this.levels = json['levels'];
           return _this.load(_this.index);
         };
@@ -33,7 +42,7 @@
       this.obstacles = [];
       level = this.levels[num];
       this.length = level.length;
-      this.floor = new Cube(this.game, 1000, this.length + 100, 10);
+      this.floor = new Cube(this.game, 100, this.length + 100, 10, true);
       this.floor.setPosition(0, (this.length / 2) - this.OFFSET, 0);
       this.floor.setName('Floor');
       ref = level['obstacles'];

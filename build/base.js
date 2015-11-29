@@ -22,22 +22,22 @@
 
   NEAR_FRUSTRUM = 0.1;
 
-  FAR_FRUSTRUM = 1000;
+  FAR_FRUSTRUM = 5000;
 
   ENABLE_SHADOW_MAPS = true;
 
   GRAVITY = new THREE.Vector3(0, 0, -50);
 
-  this.CAMERA_POSITON = new THREE.Vector3(20, -200, 35);
+  this.CAMERA_POSITON = new THREE.Vector3(20, -200, 20);
 
   this.LOOK_AT_POSITION = new THREE.Vector3(0, 0, 0);
 
-  this.LIGHT_POSITION = new THREE.Vector3(-100, 0, 200);
+  this.LIGHT_POSITION = new THREE.Vector3(-700, 0, 700);
 
   this.Base = (function() {
     function Base() {
       this.scene = new Physijs.Scene();
-      this.scene.fog = new THREE.Fog(0xffffff, 100, 5000);
+      this.scene.fog = new THREE.Fog(0xffffff, 100, 3000);
       this.scene.fog.color.setHSL(0.6, 0, 1);
       this.renderer = new THREE.WebGLRenderer();
       this.camera = new THREE.PerspectiveCamera(FOV, ASPECT_RATIO, NEAR_FRUSTRUM, FAR_FRUSTRUM);
@@ -48,7 +48,7 @@
       this.addToScene(this.hemilight);
       this.sky = Models.sky;
       this.sky_obj = new THREE.Mesh(this.sky.geometry, this.sky.materials);
-      this.sky_obj.scale.set(18, 18, 18);
+      this.sky_obj.scale.set(30, 30, 30);
       this.addToScene(this.sky_obj);
       this.scene.setGravity(GRAVITY);
       this.height = window.innerHeight;

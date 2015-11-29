@@ -14,7 +14,7 @@ HEIGHT = window.innerHeight
 FOV = 45
 ASPECT_RATIO = WIDTH / HEIGHT
 NEAR_FRUSTRUM = 0.1
-FAR_FRUSTRUM = 1000
+FAR_FRUSTRUM = 5000
 
 # 3D Graphics
 ENABLE_SHADOW_MAPS = true
@@ -23,14 +23,14 @@ ENABLE_SHADOW_MAPS = true
 GRAVITY = new THREE.Vector3(0, 0, -50)
 
 # Positions
-@CAMERA_POSITON = new THREE.Vector3(20, -200, 35)
+@CAMERA_POSITON = new THREE.Vector3(20, -200, 20)
 @LOOK_AT_POSITION = new THREE.Vector3(0, 0, 0)
-@LIGHT_POSITION = new THREE.Vector3(-100, 0, 200)
+@LIGHT_POSITION = new THREE.Vector3(-700, 0, 700)
 
 class @Base
   constructor: ->
     @scene = new Physijs.Scene()
-    @scene.fog = new THREE.Fog(0xffffff, 100, 5000)
+    @scene.fog = new THREE.Fog(0xffffff, 100, 3000)
     @scene.fog.color.setHSL(0.6, 0, 1)
     @renderer = new THREE.WebGLRenderer()
     @camera = new THREE.PerspectiveCamera(FOV, ASPECT_RATIO, NEAR_FRUSTRUM, FAR_FRUSTRUM)
@@ -41,7 +41,7 @@ class @Base
     @addToScene( @hemilight )
     @sky = Models.sky
     @sky_obj = new THREE.Mesh(@sky.geometry, @sky.materials)
-    @sky_obj.scale.set(18, 18, 18)
+    @sky_obj.scale.set(30, 30, 30)
     @addToScene(@sky_obj)
 
     @scene.setGravity(GRAVITY)

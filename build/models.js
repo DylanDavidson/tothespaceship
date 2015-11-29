@@ -5,12 +5,28 @@
 
     Models.prototype.OBJ_LOADER = new THREE.ObjectLoader();
 
-    Models.prototype.MODELS_TO_LOAD = 5;
+    Models.prototype.MODELS_TO_LOAD = 6;
 
     Models.prototype.count = 0;
 
     function Models(game) {
       this.game = game;
+      this.LOADER.load('./models/landscape.json', (function(_this) {
+        return function(geometry, materials) {
+          var i, len, material, ref;
+          Models.landscape = {
+            geometry: geometry,
+            materials: new THREE.MeshFaceMaterial(materials)
+          };
+          ref = Models.landscape.materials.materials;
+          for (i = 0, len = ref.length; i < len; i++) {
+            material = ref[i];
+            material.shading = THREE.FlatShading;
+            material.side = THREE.DoubleSide;
+          }
+          return _this.checkCount();
+        };
+      })(this));
       this.LOADER.load('./models/text.json', (function(_this) {
         return function(geometry, materials) {
           Models.text = {

@@ -21,7 +21,7 @@ class @Game
 
   start: ->
     @menu.hide()
-    @base.spotlight.intensity = 0.2
+    @base.spotlight.intensity = 0.3
     @base.setLightPosition(LIGHT_POSITION.x, LIGHT_POSITION.y, LIGHT_POSITION.z)
     @level = new Level(@)
     @player = new Player(@)
