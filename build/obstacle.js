@@ -18,20 +18,23 @@
     function Obstacle(game, y, lane) {
       this.collision = bind(this.collision, this);
       this.game = game;
-      this.cube = new Cube(this.game, 20, 5, 10);
-      this.cube.setColor(this.COLOR);
-      this.cube.setPosition(this.LANES[lane], y, this.BASE_Z);
-      this.cube.object.addEventListener('collision', this.collision);
+      this.geometry = this.getModel();
+      this.object = new THREE.Mesh(this.geometry, this.MATERIAL);
+      this.object.castShadow = true;
+      this.object.receiveShadow = true;
+      this.bounding_box = this.getBoudingBox();
+      this.game.addToScene(this.object);
+      this.bounding_box.setPosition(this.LANES[lane], y, this.BASE_Z);
+      this.setPosition(this.LANES[lane], y, this.BASE_Z);
+      this.setScale(this.SCALE.x, this.SCALE.y, this.SCALE.z);
+      this.bounding_box.object.addEventListener('collision', this.collision);
+      this.afterCreate();
     }
 
     Obstacle.prototype.collision = function(other) {
       if (other.name === 'Player') {
         return this.game.reset();
       }
-    };
-
-    Obstacle.prototype.destroy = function() {
-      return this.cube.destroy();
     };
 
     return Obstacle;

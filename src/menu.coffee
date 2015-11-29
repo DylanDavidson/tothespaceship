@@ -1,20 +1,48 @@
 class @Menu
+  CLOUDS: [
+    new THREE.Vector3(-70, 0, 50),
+    new THREE.Vector3(80, 0, 50),
+    new THREE.Vector3(-150, 0, 0),
+    new THREE.Vector3(160, 0, 10),
+    new THREE.Vector3(-70, 0, -50),
+    new THREE.Vector3(-180, 0, -80),
+    new THREE.Vector3(-140, 0, 80),
+    new THREE.Vector3(170, 0, 80),
+    new THREE.Vector3(130, 0, -50),
+    new THREE.Vector3(200, 0, -100),
+  ]
+
   constructor: (game) ->
     @game = game
-    @material = new THREE.MeshPhongMaterial({ color: 0x27ae60 })
-    @title = new THREE.TextGeometry('To The Spaceship!', { size: 20, height: 20 })
-    @title_obj = new THREE.Mesh(@title, @material)
-    @title_obj.rotation.x += 100 * DEGREES_TO_RADIANS
-    @title_obj.position.set(-115, 0, 50)
-    @material = new THREE.MeshPhongMaterial({ color: 0x27ae60 })
-    @play = new THREE.TextGeometry('Play', { size: 20, height: 20 })
-    @play_obj = new THREE.Mesh(@play, @material)
-    @play_obj.rotation.x += 80 * DEGREES_TO_RADIANS
-    @play_obj.position.set(-22, 0, -50)
+    @text = Models.text
+    @text_obj = new THREE.Mesh(@text.geometry, @text.materials)
+    @text_obj.scale.set(15, 15, 15)
+    @text_obj.rotation.x += (90 * DEGREES_TO_RADIANS)
+    @text_obj.receiveShadow = true
+    @text_obj.castShadow = true
+    @clouds = []
+    for cloud in @CLOUDS
+      obj = new THREE.Mesh(Models.cloud, new THREE.MeshPhongMaterial({ color: 'white' }))
+      obj.scale.set(15, 15, 15)
+      obj.position.set(cloud.x, cloud.y, cloud.z)
+      obj.rotation.x += (Math.random() * 90) * DEGREES_TO_RADIANS
+      obj.rotation.z += (Math.random() * 15) * DEGREES_TO_RADIANS
+      @clouds.push(obj)
+      @game.addToScene(obj)
+
+    @play = Models.play
+    @play_obj = new THREE.Mesh(@play.geometry, @play.materials)
+    @play_obj.scale.set(15, 15, 15)
+    @play_obj.rotation.x += (90 * DEGREES_TO_RADIANS)
+    @play_obj.receiveShadow = true
+    @play_obj.castShadow = true
     @play_obj.name = 'Play'
-    @game.addToScene(@title_obj)
+
+    @game.addToScene(@text_obj)
     @game.addToScene(@play_obj)
 
   hide: ->
-    @game.removeFromScene(@title_obj)
+    @game.removeFromScene(@text_obj)
     @game.removeFromScene(@play_obj)
+    for cloud in @clouds
+      @game.removeFromScene(cloud)

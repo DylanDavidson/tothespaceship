@@ -23,7 +23,7 @@ class @Level
     @obstacles = []
     level = @levels[num]
     @length = level.length
-    @floor = new Cube(@game, 100, @length, 10)
+    @floor = new Cube(@game, 1000, @length + 100, 10)
     @floor.setPosition(0, (@length / 2) - @OFFSET, 0)
     @floor.setName('Floor')
     for obstacle in level['obstacles']

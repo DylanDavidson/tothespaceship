@@ -28,18 +28,28 @@
 
   GRAVITY = new THREE.Vector3(0, 0, -50);
 
-  this.CAMERA_POSITON = new THREE.Vector3(20, -200, 40);
+  this.CAMERA_POSITON = new THREE.Vector3(20, -200, 35);
 
   this.LOOK_AT_POSITION = new THREE.Vector3(0, 0, 0);
 
-  this.LIGHT_POSITION = new THREE.Vector3(-30, -200, 50);
+  this.LIGHT_POSITION = new THREE.Vector3(-100, 0, 200);
 
   this.Base = (function() {
     function Base() {
       this.scene = new Physijs.Scene();
+      this.scene.fog = new THREE.Fog(0xffffff, 100, 5000);
+      this.scene.fog.color.setHSL(0.6, 0, 1);
       this.renderer = new THREE.WebGLRenderer();
       this.camera = new THREE.PerspectiveCamera(FOV, ASPECT_RATIO, NEAR_FRUSTRUM, FAR_FRUSTRUM);
-      this.spotlight = new THREE.SpotLight(LIGHT_COLOR);
+      this.oc = new THREE.OrbitControls(this.camera);
+      this.spotlight = new THREE.DirectionalLight(LIGHT_COLOR, 0.3);
+      this.hemilight = new THREE.HemisphereLight(0x2980b9, 0x2ecc71, 0.3);
+      this.hemilight.position.set(0, 200, 0);
+      this.addToScene(this.hemilight);
+      this.sky = Models.sky;
+      this.sky_obj = new THREE.Mesh(this.sky.geometry, this.sky.materials);
+      this.sky_obj.scale.set(18, 18, 18);
+      this.addToScene(this.sky_obj);
       this.scene.setGravity(GRAVITY);
       this.height = window.innerHeight;
       this.width = window.innerWidth;
@@ -82,9 +92,9 @@
     };
 
     Base.prototype.setupRenderer = function() {
-      this.renderer.setClearColor(BLACK, OPAQUE_ALPHA);
+      this.renderer.setClearColor(this.scene.fog.color);
       this.renderer.setSize(WIDTH, HEIGHT);
-      this.renderer.shadowMapEnabled = ENABLE_SHADOW_MAPS;
+      this.renderer.shadowMap.enabled = ENABLE_SHADOW_MAPS;
       return document.body.appendChild(this.renderer.domElement);
     };
 
@@ -97,11 +107,19 @@
 
     Base.prototype.setupSpotlight = function() {
       this.scene.add(new THREE.AmbientLight(0xecf0f1));
+      this.spotlight.color.setHSL(0.1, 1, 0.95);
       this.spotlight.position.set(LIGHT_POSITION.x, LIGHT_POSITION.y, LIGHT_POSITION.z);
       this.spotlight.lookAt(LOOK_AT_POSITION);
-      this.spotlight.shadowCameraNear = 20;
-      this.spotlight.shadowCameraFar = 500;
-      this.spotlight.shadowDarkness = 0.5;
+      this.spotlight.shadowCameraFar = 1;
+      this.spotlight.shadowCameraFar = 2000;
+      this.spotlight.shadowMapWidth = 2048;
+      this.spotlight.shadowMapHeight = 2048;
+      this.spotlight.shadowCameraLeft = -1000;
+      this.spotlight.shadowCameraRight = 1000;
+      this.spotlight.shadowCameraTop = 1000;
+      this.spotlight.shadowCameraBottom = -1000;
+      this.helper = new THREE.CameraHelper(this.spotlight.shadow.camera);
+      this.addToScene(this.helper);
       this.spotlight.castShadow = true;
       return this.addToScene(this.spotlight);
     };

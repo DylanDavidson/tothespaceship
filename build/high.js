@@ -10,7 +10,27 @@
       return High.__super__.constructor.apply(this, arguments);
     }
 
-    High.prototype.BASE_Z = 22;
+    High.prototype.MATERIAL = new THREE.MeshPhongMaterial({
+      color: 0xbdc3c7,
+      specular: 0xbdc3c7,
+      shininess: 0
+    });
+
+    High.prototype.BASE_Z = 24;
+
+    High.prototype.SCALE = new THREE.Vector3(7, 7, 7);
+
+    High.prototype.getBoudingBox = function() {
+      return new Cube(this.game, 20, 7, 10, true);
+    };
+
+    High.prototype.getModel = function() {
+      return Models.cloud;
+    };
+
+    High.prototype.afterCreate = function() {
+      return this.rotateX(Math.random() * 180);
+    };
 
     return High;
 

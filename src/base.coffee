@@ -23,16 +23,26 @@ ENABLE_SHADOW_MAPS = true
 GRAVITY = new THREE.Vector3(0, 0, -50)
 
 # Positions
-@CAMERA_POSITON = new THREE.Vector3(20, -200, 40)
+@CAMERA_POSITON = new THREE.Vector3(20, -200, 35)
 @LOOK_AT_POSITION = new THREE.Vector3(0, 0, 0)
-@LIGHT_POSITION = new THREE.Vector3(-30, -200, 50)
+@LIGHT_POSITION = new THREE.Vector3(-100, 0, 200)
 
 class @Base
   constructor: ->
     @scene = new Physijs.Scene()
+    @scene.fog = new THREE.Fog(0xffffff, 100, 5000)
+    @scene.fog.color.setHSL(0.6, 0, 1)
     @renderer = new THREE.WebGLRenderer()
     @camera = new THREE.PerspectiveCamera(FOV, ASPECT_RATIO, NEAR_FRUSTRUM, FAR_FRUSTRUM)
-    @spotlight = new THREE.SpotLight(LIGHT_COLOR)
+    @oc = new THREE.OrbitControls(@camera)
+    @spotlight = new THREE.DirectionalLight(LIGHT_COLOR, 0.3)
+    @hemilight = new THREE.HemisphereLight( 0x2980b9, 0x2ecc71, 0.3 )
+    @hemilight.position.set( 0, 200, 0 )
+    @addToScene( @hemilight )
+    @sky = Models.sky
+    @sky_obj = new THREE.Mesh(@sky.geometry, @sky.materials)
+    @sky_obj.scale.set(18, 18, 18)
+    @addToScene(@sky_obj)
 
     @scene.setGravity(GRAVITY)
 
@@ -71,9 +81,9 @@ class @Base
     @spotlight.lookAt(new THREE.Vector3(x, y, z))
 
   setupRenderer: ->
-    @renderer.setClearColor(BLACK, OPAQUE_ALPHA)
+    @renderer.setClearColor(@scene.fog.color)
     @renderer.setSize(WIDTH, HEIGHT)
-    @renderer.shadowMapEnabled = ENABLE_SHADOW_MAPS
+    @renderer.shadowMap.enabled = ENABLE_SHADOW_MAPS
     document.body.appendChild(@renderer.domElement)
 
   setupCamera: ->
@@ -85,12 +95,19 @@ class @Base
   setupSpotlight: ->
     @scene.add(new THREE.AmbientLight(0xecf0f1))
 
+    @spotlight.color.setHSL(0.1, 1, 0.95)
     @spotlight.position.set(LIGHT_POSITION.x, LIGHT_POSITION.y, LIGHT_POSITION.z)
     @spotlight.lookAt(LOOK_AT_POSITION)
-    @spotlight.shadowCameraNear = 20
-    @spotlight.shadowCameraFar = 500
-    @spotlight.shadowDarkness = 0.5
-    # @spotlight.shadowCameraVisible = true
+    @spotlight.shadowCameraFar = 1
+    @spotlight.shadowCameraFar = 2000
+    @spotlight.shadowMapWidth = 2048
+    @spotlight.shadowMapHeight = 2048
+    @spotlight.shadowCameraLeft = -1000
+    @spotlight.shadowCameraRight = 1000
+    @spotlight.shadowCameraTop = 1000
+    @spotlight.shadowCameraBottom = -1000
+    @helper = new THREE.CameraHelper(@spotlight.shadow.camera)
+    @addToScene(@helper)
     @spotlight.castShadow = true
     @addToScene(@spotlight)
 

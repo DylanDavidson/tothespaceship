@@ -25,6 +25,29 @@
       return this.object.name = name;
     };
 
+    Entity.prototype.destroy = function() {
+      return this.game.removeFromScene(this.object);
+    };
+
+    Entity.prototype.moveX = function(amount) {
+      this.object.__dirtyPosition = true;
+      return this.object.position.x += amount;
+    };
+
+    Entity.prototype.rotateX = function(degrees) {
+      this.object.__dirtyRotation = true;
+      return this.object.rotation.x += degrees * DEGREES_TO_RADIANS;
+    };
+
+    Entity.prototype.rotateZ = function(degrees) {
+      this.object.__dirtyRotation = true;
+      return this.object.rotation.z += degrees * DEGREES_TO_RADIANS;
+    };
+
+    Entity.prototype.setScale = function(x, y, z) {
+      return this.object.scale.set(x, y, z);
+    };
+
     return Entity;
 
   })();

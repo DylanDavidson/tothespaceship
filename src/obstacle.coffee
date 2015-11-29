@@ -8,14 +8,18 @@ class @Obstacle extends @Entity
 
   constructor: (game, y, lane) ->
     @game = game
-    @cube = new Cube(@game, 20, 5, 10)
-    @cube.setColor(@COLOR)
-    @cube.setPosition(@LANES[lane], y, @BASE_Z)
-    @cube.object.addEventListener('collision', @collision)
+    @geometry = @getModel()
+    @object = new THREE.Mesh(@geometry, @MATERIAL)
+    @object.castShadow = true
+    @object.receiveShadow = true
+    @bounding_box = @getBoudingBox()
+    @game.addToScene(@object)
+    @bounding_box.setPosition(@LANES[lane], y, @BASE_Z)
+    @setPosition(@LANES[lane], y, @BASE_Z)
+    @setScale(@SCALE.x, @SCALE.y, @SCALE.z)
+    @bounding_box.object.addEventListener('collision', @collision)
+    @afterCreate()
 
   collision: (other) =>
     if other.name == 'Player'
       @game.reset()
-
-  destroy: ->
-    @cube.destroy()

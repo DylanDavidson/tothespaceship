@@ -33,7 +33,7 @@
       this.obstacles = [];
       level = this.levels[num];
       this.length = level.length;
-      this.floor = new Cube(this.game, 100, this.length, 10);
+      this.floor = new Cube(this.game, 1000, this.length + 100, 10);
       this.floor.setPosition(0, (this.length / 2) - this.OFFSET, 0);
       this.floor.setName('Floor');
       ref = level['obstacles'];

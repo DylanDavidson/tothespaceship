@@ -10,7 +10,25 @@
       return Low.__super__.constructor.apply(this, arguments);
     }
 
-    Low.prototype.BASE_Z = 7.5;
+    Low.prototype.MATERIAL = new THREE.MeshPhongMaterial({
+      color: 0x9CAAC6
+    });
+
+    Low.prototype.BASE_Z = 5;
+
+    Low.prototype.SCALE = new THREE.Vector3(9, 9, 9);
+
+    Low.prototype.getBoudingBox = function() {
+      return new Cube(this.game, 20, 8, 15, true);
+    };
+
+    Low.prototype.getModel = function() {
+      return Models.rock;
+    };
+
+    Low.prototype.afterCreate = function() {
+      return this.rotateZ(Math.random() * 90);
+    };
 
     return Low;
 

@@ -9,8 +9,6 @@
 
     Controller.prototype.last = null;
 
-    Controller.prototype.OLD_COLOR = 0x27ae60;
-
     Controller.prototype.started = false;
 
     function Controller(game) {
@@ -28,7 +26,7 @@
         return;
       }
       if (this.last !== null) {
-        this.last.material.color.set(this.OLD_COLOR);
+        this.last.material.materials[0].color.set(Models.play.color);
         this.last = null;
       }
       this.raycaster.setFromCamera(this.mouse, this.game.base.camera);
@@ -38,7 +36,7 @@
       }
       if (intersects[0].object.name === 'Play') {
         this.last = intersects[0].object;
-        return this.last.material.color.set(0xf1c40f);
+        return this.last.material.materials[0].color.set(0xf1c40f);
       }
     };
 

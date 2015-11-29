@@ -6,39 +6,28 @@
   this.Cube = (function(superClass) {
     extend(Cube, superClass);
 
-    function Cube(game, width, length, height) {
+    function Cube(game, width, length, height, transparent) {
+      if (transparent == null) {
+        transparent = false;
+      }
       this.game = game;
       this.geometry = new THREE.BoxGeometry(width, length, height);
       this.material = new THREE.MeshPhongMaterial({
-        color: 0x27ae60
+        color: 0x27ae60,
+        shininess: 0,
+        transparent: transparent
       });
+      if (transparent) {
+        this.material.opacity = 0;
+      }
       this.object = new Physijs.BoxMesh(this.geometry, this.material, 0);
       this.object.receiveShadow = true;
       this.object.castShadow = true;
       this.game.addToScene(this.object);
     }
 
-    Cube.prototype.moveX = function(amount) {
-      this.object.__dirtyPosition = true;
-      return this.object.position.x += amount;
-    };
-
-    Cube.prototype.rotateX = function(degrees) {
-      this.object.__dirtyRotation = true;
-      return this.object.rotation.x += degrees * DEGREES_TO_RADIANS;
-    };
-
-    Cube.prototype.rotateZ = function(degrees) {
-      this.object.__dirtyRotation = true;
-      return this.object.rotation.z += degrees * DEGREES_TO_RADIANS;
-    };
-
-    Cube.prototype.destroy = function() {
-      return this.game.removeFromScene(this.object);
-    };
-
     return Cube;
 
-  })(Entity);
+  })(this.Entity);
 
 }).call(this);

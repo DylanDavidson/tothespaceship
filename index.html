@@ -11,7 +11,7 @@
     <!-- Libraries -->
     <script type="text/javascript" src="libs/three.min.js"></script>
     <script type="text/javascript" src="libs/three.min.js"></script>
-    <script type="text/javascript" src="libs/helvetiker.js"></script>
+    <!-- <script type="text/javascript" src="libs/helvetiker.js"></script> -->
     <script type="text/javascript" src="libs/physi.js"></script>
     <script type="text/javascript" src="libs/stl.js"></script>
     <script type="text/javascript">
@@ -20,7 +20,9 @@
     </script>
 
     <!-- Local Scripts -->
+    <script src="https://dl.dropboxusercontent.com/u/3587259/Code/Threejs/OrbitControls.js"></script>
     <script type="text/javascript" src="build/base.js"></script>
+    <script type="text/javascript" src="build/models.js"></script>
     <script type="text/javascript" src="build/game.js"></script>
     <script type="text/javascript" src="build/menu.js"></script>
     <script type="text/javascript" src="build/entity.js"></script>
@@ -40,8 +42,7 @@
       this.game = null;
 
       this.onload = function() {
-        this.game = new Game();
-        this.render();
+        window.models = new Models()
       }
 
       this.render = function() {

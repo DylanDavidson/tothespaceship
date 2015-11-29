@@ -9,16 +9,19 @@ window.timeout = (time, method) ->
 
 class @Game
   constructor: ->
+    @models = window.models
     @base = new Base()
     @menu = new Menu(@)
     @controller = new Controller(@)
     @base.setCameraPosition(0, -300, 0)
     @base.setCameraLook(0, 0, 0)
-    @base.setLightPosition(0, -300, 0)
+    @base.spotlight.intensity = 0.15
+    @base.setLightPosition(0, -200, 0)
     @base.setLightLook(0, 0, 0)
 
   start: ->
     @menu.hide()
+    @base.spotlight.intensity = 0.2
     @base.setLightPosition(LIGHT_POSITION.x, LIGHT_POSITION.y, LIGHT_POSITION.z)
     @level = new Level(@)
     @player = new Player(@)
