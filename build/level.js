@@ -5,7 +5,7 @@
 
     function Level(game) {
       this.game = game;
-      this.index = 0;
+      this.index = 7;
       $.ajaxSetup({
         cache: false
       });

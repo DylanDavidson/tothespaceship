@@ -3,7 +3,7 @@ class @Level
 
   constructor: (game) ->
     @game = game
-    @index = 0
+    @index = 7
     $.ajaxSetup({ cache: false })
     $.getJSON 'src/levels.json', (json) =>
       @landscape = new THREE.Mesh(Models.landscape.geometry, Models.landscape.materials)

@@ -75,6 +75,46 @@
         { "type": "Low", "y": 0, "lane": 0 },
         { "type": "Low", "y": 0, "lane": 1 },
         { "type": "Low", "y": 0, "lane": 2 },
+        { "type": "Low", "y": 100, "lane": 0 },
+        { "type": "Low", "y": 100, "lane": 1 },
+        { "type": "Low", "y": 100, "lane": 2 },
+        { "type": "Low", "y": 190, "lane": 0 },
+        { "type": "Low", "y": 190, "lane": 1 },
+        { "type": "Low", "y": 190, "lane": 2 },
+        { "type": "Low", "y": 270, "lane": 0 },
+        { "type": "Low", "y": 270, "lane": 1 },
+        { "type": "Low", "y": 270, "lane": 2 },
+        { "type": "Low", "y": 350, "lane": 0 },
+        { "type": "Low", "y": 350, "lane": 1 },
+        { "type": "Low", "y": 350, "lane": 2 }
+      ]
+    },
+    {
+      "length": 700,
+      "obstacles": [
+        { "type": "Full", "y": 0, "lane": 0 },
+        { "type": "Full", "y": 0, "lane": 1 },
+        { "type": "Full", "y": 80, "lane": 0 },
+        { "type": "Full", "y": 80, "lane": 2 },
+        { "type": "Full", "y": 150, "lane": 1 },
+        { "type": "Full", "y": 150, "lane": 2 },
+        { "type": "Full", "y": 210, "lane": 0 },
+        { "type": "Full", "y": 210, "lane": 2 },
+        { "type": "Full", "y": 270, "lane": 1 },
+        { "type": "Full", "y": 270, "lane": 2 },
+        { "type": "Full", "y": 330, "lane": 0 },
+        { "type": "Full", "y": 330, "lane": 2 },
+        { "type": "Low", "y": 365, "lane": 0 },
+        { "type": "Low", "y": 365, "lane": 1 },
+        { "type": "Low", "y": 365, "lane": 2 }
+      ]
+    },
+    {
+      "length": 700,
+      "obstacles": [
+        { "type": "Low", "y": 0, "lane": 0 },
+        { "type": "Low", "y": 0, "lane": 1 },
+        { "type": "Low", "y": 0, "lane": 2 },
         { "type": "High", "y": 75, "lane": 0 },
         { "type": "High", "y": 75, "lane": 1 },
         { "type": "High", "y": 75, "lane": 2 },
@@ -89,6 +129,34 @@
         { "type": "High", "y": 325, "lane": 2 },
         { "type": "Low", "y": 400, "lane": 0 },
         { "type": "Low", "y": 400, "lane": 1 }
+      ]
+    },
+    {
+      "length": 700,
+      "obstacles": [
+        { "type": "Full", "y": 0, "lane": 0 },
+        { "type": "Low", "y": 0, "lane": 1 },
+        { "type": "Full", "y": 0, "lane": 2 },
+
+        { "type": "Full", "y": 90, "lane": 0 },
+        { "type": "Full", "y": 90, "lane": 1 },
+        { "type": "High", "y": 90, "lane": 2 },
+
+        { "type": "Low", "y": 200, "lane": 0 },
+        { "type": "High", "y": 200, "lane": 0 },
+        { "type": "Low", "y": 200, "lane": 1 },
+        { "type": "Full", "y": 210, "lane": 2 },
+
+        { "type": "Low", "y": 300, "lane": 0 },
+        { "type": "Full", "y": 300, "lane": 1 },
+        { "type": "Full", "y": 300, "lane": 2 },
+
+        { "type": "High", "y": 375, "lane": 0 },
+        { "type": "High", "y": 375, "lane": 1 },
+        { "type": "High", "y": 375, "lane": 2 },
+
+        { "type": "Low", "y": 450, "lane": 0 },
+        { "type": "Low", "y": 450, "lane": 2 }
       ]
     }
   ]
