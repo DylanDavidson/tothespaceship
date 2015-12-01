@@ -8,11 +8,11 @@ class @Obstacle extends @Entity
 
   constructor: (game, y, lane) ->
     @game = game
-    @geometry = @getModel()
-    @object = new THREE.Mesh(@geometry, @MATERIAL)
+    @model = @getModel()
+    @object = new THREE.Mesh(@model.geometry, @model.materials)
     @object.castShadow = true
     @object.receiveShadow = true
-    @bounding_box = @getBoudingBox()
+    @bounding_box = @getBoundingBox()
     @game.addToScene(@object)
     @bounding_box.setPosition(@LANES[lane], y, @BASE_Z)
     @setPosition(@LANES[lane], y, @BASE_Z)
@@ -23,3 +23,7 @@ class @Obstacle extends @Entity
   collision: (other) =>
     if other.name == 'Player'
       @game.reset()
+
+  destroy: ->
+    @game.removeFromScene(@object)
+    @bounding_box.destroy()

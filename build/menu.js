@@ -16,9 +16,7 @@
       ref = this.CLOUDS;
       for (i = 0, len = ref.length; i < len; i++) {
         cloud = ref[i];
-        obj = new THREE.Mesh(Models.cloud, new THREE.MeshPhongMaterial({
-          color: 'white'
-        }));
+        obj = new THREE.Mesh(Models.cloud.geometry, Models.cloud.materials);
         obj.scale.set(15, 15, 15);
         obj.position.set(cloud.x, cloud.y, cloud.z);
         obj.rotation.x += (Math.random() * 90) * DEGREES_TO_RADIANS;

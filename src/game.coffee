@@ -40,6 +40,7 @@ class @Game
         @level.nextLevel()
         @player.reset()
       else
+        @level.win()
         console.log('Win!')
 
   reset: ->

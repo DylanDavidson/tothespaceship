@@ -1,7 +1,6 @@
 class @Models
   LOADER: new THREE.JSONLoader()
-  OBJ_LOADER: new THREE.ObjectLoader()
-  MODELS_TO_LOAD: 6
+  MODELS_TO_LOAD: 8
   count: 0
 
   constructor: (game) ->
@@ -26,11 +25,25 @@ class @Models
       Models.sky.materials.materials[0].shading = THREE.FlatShading
       Models.sky.materials.materials[0].side = THREE.DoubleSide
       @checkCount()
-    @LOADER.load './models/cloud.json', (geometry) =>
-      Models.cloud = geometry
+    @LOADER.load './models/cloud.json', (geometry, materials) =>
+      Models.cloud = { geometry: geometry, materials: new THREE.MeshFaceMaterial(materials) }
+      for material in Models.cloud.materials.materials
+        material.shading = THREE.FlatShading
       @checkCount()
-    @LOADER.load './models/rock.json', (geometry) =>
-      Models.rock = geometry
+    @LOADER.load './models/rock.json', (geometry, materials) =>
+      Models.rock = { geometry: geometry, materials: new THREE.MeshFaceMaterial(materials) }
+      for material in Models.rock.materials.materials
+        material.shading = THREE.FlatShading
+      @checkCount()
+    @LOADER.load './models/tree.json', (geometry, materials) =>
+      Models.tree = { geometry: geometry, materials: new THREE.MeshFaceMaterial(materials) }
+      for material in Models.tree.materials.materials
+        material.shading = THREE.FlatShading
+      @checkCount()
+    @LOADER.load './models/win.json', (geometry, materials) =>
+      Models.rocket = { geometry: geometry, materials: new THREE.MeshFaceMaterial(materials) }
+      for material in Models.rocket.materials.materials
+        material.shading = THREE.FlatShading
       @checkCount()
 
   checkCount: ->

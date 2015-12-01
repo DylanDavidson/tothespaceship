@@ -18,11 +18,11 @@
     function Obstacle(game, y, lane) {
       this.collision = bind(this.collision, this);
       this.game = game;
-      this.geometry = this.getModel();
-      this.object = new THREE.Mesh(this.geometry, this.MATERIAL);
+      this.model = this.getModel();
+      this.object = new THREE.Mesh(this.model.geometry, this.model.materials);
       this.object.castShadow = true;
       this.object.receiveShadow = true;
-      this.bounding_box = this.getBoudingBox();
+      this.bounding_box = this.getBoundingBox();
       this.game.addToScene(this.object);
       this.bounding_box.setPosition(this.LANES[lane], y, this.BASE_Z);
       this.setPosition(this.LANES[lane], y, this.BASE_Z);
@@ -35,6 +35,11 @@
       if (other.name === 'Player') {
         return this.game.reset();
       }
+    };
+
+    Obstacle.prototype.destroy = function() {
+      this.game.removeFromScene(this.object);
+      return this.bounding_box.destroy();
     };
 
     return Obstacle;

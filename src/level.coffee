@@ -4,6 +4,7 @@ class @Level
   constructor: (game) ->
     @game = game
     @index = 0
+    $.ajaxSetup({ cache: false })
     $.getJSON 'src/levels.json', (json) =>
       @landscape = new THREE.Mesh(Models.landscape.geometry, Models.landscape.materials)
       @landscape.rotation.x += (90 * DEGREES_TO_RADIANS)
@@ -40,8 +41,14 @@ class @Level
         @obstacles.push new Low(@game, obstacle.y, obstacle.lane)
       else if obstacle.type == 'High'
         @obstacles.push new High(@game, obstacle.y, obstacle.lane)
+      else if obstacle.type == 'Full'
+        @obstacles.push new Full(@game, obstacle.y, obstacle.lane)
 
   clear: ->
     for obstacle in @obstacles
       obstacle.destroy()
     @floor.destroy()
+
+  win: ->
+    @clear()
+    @game.removeFromScene(@landscape)

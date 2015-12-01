@@ -3,9 +3,7 @@
   this.Models = (function() {
     Models.prototype.LOADER = new THREE.JSONLoader();
 
-    Models.prototype.OBJ_LOADER = new THREE.ObjectLoader();
-
-    Models.prototype.MODELS_TO_LOAD = 6;
+    Models.prototype.MODELS_TO_LOAD = 8;
 
     Models.prototype.count = 0;
 
@@ -60,14 +58,62 @@
         };
       })(this));
       this.LOADER.load('./models/cloud.json', (function(_this) {
-        return function(geometry) {
-          Models.cloud = geometry;
+        return function(geometry, materials) {
+          var i, len, material, ref;
+          Models.cloud = {
+            geometry: geometry,
+            materials: new THREE.MeshFaceMaterial(materials)
+          };
+          ref = Models.cloud.materials.materials;
+          for (i = 0, len = ref.length; i < len; i++) {
+            material = ref[i];
+            material.shading = THREE.FlatShading;
+          }
           return _this.checkCount();
         };
       })(this));
       this.LOADER.load('./models/rock.json', (function(_this) {
-        return function(geometry) {
-          Models.rock = geometry;
+        return function(geometry, materials) {
+          var i, len, material, ref;
+          Models.rock = {
+            geometry: geometry,
+            materials: new THREE.MeshFaceMaterial(materials)
+          };
+          ref = Models.rock.materials.materials;
+          for (i = 0, len = ref.length; i < len; i++) {
+            material = ref[i];
+            material.shading = THREE.FlatShading;
+          }
+          return _this.checkCount();
+        };
+      })(this));
+      this.LOADER.load('./models/tree.json', (function(_this) {
+        return function(geometry, materials) {
+          var i, len, material, ref;
+          Models.tree = {
+            geometry: geometry,
+            materials: new THREE.MeshFaceMaterial(materials)
+          };
+          ref = Models.tree.materials.materials;
+          for (i = 0, len = ref.length; i < len; i++) {
+            material = ref[i];
+            material.shading = THREE.FlatShading;
+          }
+          return _this.checkCount();
+        };
+      })(this));
+      this.LOADER.load('./models/win.json', (function(_this) {
+        return function(geometry, materials) {
+          var i, len, material, ref;
+          Models.rocket = {
+            geometry: geometry,
+            materials: new THREE.MeshFaceMaterial(materials)
+          };
+          ref = Models.rocket.materials.materials;
+          for (i = 0, len = ref.length; i < len; i++) {
+            material = ref[i];
+            material.shading = THREE.FlatShading;
+          }
           return _this.checkCount();
         };
       })(this));

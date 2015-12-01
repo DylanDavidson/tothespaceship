@@ -10,17 +10,11 @@
       return High.__super__.constructor.apply(this, arguments);
     }
 
-    High.prototype.MATERIAL = new THREE.MeshPhongMaterial({
-      color: 0xbdc3c7,
-      specular: 0xbdc3c7,
-      shininess: 0
-    });
-
     High.prototype.BASE_Z = 24;
 
     High.prototype.SCALE = new THREE.Vector3(7, 7, 7);
 
-    High.prototype.getBoudingBox = function() {
+    High.prototype.getBoundingBox = function() {
       return new Cube(this.game, 20, 7, 10, true);
     };
 

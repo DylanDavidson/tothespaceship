@@ -43,6 +43,7 @@
           this.level.nextLevel();
           return this.player.reset();
         } else {
+          this.level.win();
           return console.log('Win!');
         }
       }

@@ -22,7 +22,7 @@ class @Menu
     @text_obj.castShadow = true
     @clouds = []
     for cloud in @CLOUDS
-      obj = new THREE.Mesh(Models.cloud, new THREE.MeshPhongMaterial({ color: 'white' }))
+      obj = new THREE.Mesh(Models.cloud.geometry, Models.cloud.materials)
       obj.scale.set(15, 15, 15)
       obj.position.set(cloud.x, cloud.y, cloud.z)
       obj.rotation.x += (Math.random() * 90) * DEGREES_TO_RADIANS

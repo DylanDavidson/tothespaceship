@@ -6,6 +6,9 @@
     function Level(game) {
       this.game = game;
       this.index = 0;
+      $.ajaxSetup({
+        cache: false
+      });
       $.getJSON('src/levels.json', (function(_this) {
         return function(json) {
           _this.landscape = new THREE.Mesh(Models.landscape.geometry, Models.landscape.materials);
@@ -53,6 +56,8 @@
           results.push(this.obstacles.push(new Low(this.game, obstacle.y, obstacle.lane)));
         } else if (obstacle.type === 'High') {
           results.push(this.obstacles.push(new High(this.game, obstacle.y, obstacle.lane)));
+        } else if (obstacle.type === 'Full') {
+          results.push(this.obstacles.push(new Full(this.game, obstacle.y, obstacle.lane)));
         } else {
           results.push(void 0);
         }
@@ -68,6 +73,11 @@
         obstacle.destroy();
       }
       return this.floor.destroy();
+    };
+
+    Level.prototype.win = function() {
+      this.clear();
+      return this.game.removeFromScene(this.landscape);
     };
 
     return Level;

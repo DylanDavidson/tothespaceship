@@ -1,14 +1,14 @@
 {
   "levels": [
     {
-      "length": 500,
+      "length": 700,
       "obstacles": [
-        { "type": "Low", "y": 0, "lane": 0 },
         { "type": "Low", "y": 0, "lane": 1 },
-        { "type": "Low", "y": 0, "lane": 2 },
-        { "type": "High", "y": 75, "lane": 0 },
-        { "type": "High", "y": 75, "lane": 1 },
-        { "type": "High", "y": 75, "lane": 2 }
+        { "type": "High", "y": 100, "lane": 1 },
+        { "type": "Full", "y": 250, "lane": 1 },
+        { "type": "Full", "y": 250, "lane": 2 },
+        { "type": "Full", "y": 400, "lane": 0 },
+        { "type": "Full", "y": 400, "lane": 1 }
       ]
     },
     {

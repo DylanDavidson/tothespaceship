@@ -106,8 +106,8 @@ class @Base
     @spotlight.shadowCameraRight = 1000
     @spotlight.shadowCameraTop = 1000
     @spotlight.shadowCameraBottom = -1000
-    @helper = new THREE.CameraHelper(@spotlight.shadow.camera)
-    @addToScene(@helper)
+    # @helper = new THREE.CameraHelper(@spotlight.shadow.camera)
+    # @addToScene(@helper)
     @spotlight.castShadow = true
     @addToScene(@spotlight)
 

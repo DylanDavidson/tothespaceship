@@ -118,8 +118,6 @@
       this.spotlight.shadowCameraRight = 1000;
       this.spotlight.shadowCameraTop = 1000;
       this.spotlight.shadowCameraBottom = -1000;
-      this.helper = new THREE.CameraHelper(this.spotlight.shadow.camera);
-      this.addToScene(this.helper);
       this.spotlight.castShadow = true;
       return this.addToScene(this.spotlight);
     };
