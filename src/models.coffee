@@ -1,6 +1,6 @@
 class @Models
   LOADER: new THREE.JSONLoader()
-  MODELS_TO_LOAD: 8
+  MODELS_TO_LOAD: 9
   count: 0
 
   constructor: (game) ->
@@ -43,6 +43,11 @@ class @Models
     @LOADER.load './models/win.json', (geometry, materials) =>
       Models.rocket = { geometry: geometry, materials: new THREE.MeshFaceMaterial(materials) }
       for material in Models.rocket.materials.materials
+        material.shading = THREE.FlatShading
+      @checkCount()
+    @LOADER.load './models/uptut.json', (geometry, materials) =>
+      Models.uptut = { geometry: geometry, materials: new THREE.MeshFaceMaterial(materials) }
+      for material in Models.uptut.materials.materials
         material.shading = THREE.FlatShading
       @checkCount()
 

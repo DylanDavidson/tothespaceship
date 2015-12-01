@@ -3,7 +3,7 @@
   this.Models = (function() {
     Models.prototype.LOADER = new THREE.JSONLoader();
 
-    Models.prototype.MODELS_TO_LOAD = 8;
+    Models.prototype.MODELS_TO_LOAD = 9;
 
     Models.prototype.count = 0;
 
@@ -110,6 +110,21 @@
             materials: new THREE.MeshFaceMaterial(materials)
           };
           ref = Models.rocket.materials.materials;
+          for (i = 0, len = ref.length; i < len; i++) {
+            material = ref[i];
+            material.shading = THREE.FlatShading;
+          }
+          return _this.checkCount();
+        };
+      })(this));
+      this.LOADER.load('./models/uptut.json', (function(_this) {
+        return function(geometry, materials) {
+          var i, len, material, ref;
+          Models.uptut = {
+            geometry: geometry,
+            materials: new THREE.MeshFaceMaterial(materials)
+          };
+          ref = Models.uptut.materials.materials;
           for (i = 0, len = ref.length; i < len; i++) {
             material = ref[i];
             material.shading = THREE.FlatShading;

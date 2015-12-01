@@ -48,6 +48,9 @@
       this.floor = new Cube(this.game, 100, this.length + 100, 10, true);
       this.floor.setPosition(0, (this.length / 2) - this.OFFSET, 0);
       this.floor.setName('Floor');
+      if (num === 0) {
+        this.loadTutotial();
+      }
       ref = level['obstacles'];
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
@@ -65,6 +68,14 @@
       return results;
     };
 
+    Level.prototype.loadTutotial = function() {
+      this.uptut = new THREE.Mesh(Models.uptut.geometry, Models.uptut.materials);
+      this.uptut.position.set(0, 0, 40);
+      this.uptut.rotation.x += 90 * DEGREES_TO_RADIANS;
+      this.uptut.scale.set(5, 5, 5);
+      return this.game.addToScene(this.uptut);
+    };
+
     Level.prototype.clear = function() {
       var i, len, obstacle, ref;
       ref = this.obstacles;
@@ -72,7 +83,10 @@
         obstacle = ref[i];
         obstacle.destroy();
       }
-      return this.floor.destroy();
+      this.floor.destroy();
+      if (this.uptut) {
+        return this.game.removeFromScene(this.uptut);
+      }
     };
 
     Level.prototype.win = function() {

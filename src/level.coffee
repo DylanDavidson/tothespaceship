@@ -36,6 +36,8 @@ class @Level
     @floor = new Cube(@game, 100, @length + 100, 10, true)
     @floor.setPosition(0, (@length / 2) - @OFFSET, 0)
     @floor.setName('Floor')
+    if num == 0
+      @loadTutotial()
     for obstacle in level['obstacles']
       if obstacle.type == 'Low'
         @obstacles.push new Low(@game, obstacle.y, obstacle.lane)
@@ -44,10 +46,18 @@ class @Level
       else if obstacle.type == 'Full'
         @obstacles.push new Full(@game, obstacle.y, obstacle.lane)
 
+  loadTutotial: ->
+    @uptut = new THREE.Mesh(Models.uptut.geometry, Models.uptut.materials)
+    @uptut.position.set(0, 0, 40)
+    @uptut.rotation.x += (90 * DEGREES_TO_RADIANS)
+    @uptut.scale.set(5, 5, 5)
+    @game.addToScene(@uptut)
+
   clear: ->
     for obstacle in @obstacles
       obstacle.destroy()
     @floor.destroy()
+    @game.removeFromScene(@uptut) if @uptut
 
   win: ->
     @clear()
