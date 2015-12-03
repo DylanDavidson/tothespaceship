@@ -75,7 +75,7 @@
         }
         this.onGround = false;
         this.noJump = true;
-        this.cube.object.applyCentralImpulse(new THREE.Vector3(0, 0, 30));
+        this.cube.object.applyCentralImpulse(new THREE.Vector3(0, 0, 33));
         return timeout(1000, (function(_this) {
           return function() {
             return _this.noJump = false;

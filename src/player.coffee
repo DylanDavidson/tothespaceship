@@ -46,7 +46,7 @@ class @Player
       return if @noJump
       @onGround = false
       @noJump = true
-      @cube.object.applyCentralImpulse(new THREE.Vector3(0, 0, 30))
+      @cube.object.applyCentralImpulse(new THREE.Vector3(0, 0, 33))
       timeout 1000, =>
         @noJump = false
 
